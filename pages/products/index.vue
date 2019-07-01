@@ -1,12 +1,8 @@
-<template>
-  <div>
-    <h2>Products list</h2>
-    <ul>
-      <li v-for="product in products" :key="product.pid" @click="onLoadProduct(product.pid)">
-        {{ product.name }}
-      </li>
-    </ul>
-  </div>
+<template lang='pug'>
+  div
+    h2 Products list
+    ul
+      li(v-for='product in products' :key='product.pid' @click='onLoadProduct(product.pid)') {{ product.name }}
 </template>
 
 <script>
@@ -31,8 +27,8 @@
       }
     },
     methods: {
-      onLoadProduct (pid) {
-        this.$router.push('/products/' + pid)
+      onLoadProduct (id) {
+        this.$router.push('/products/' + id)
       }
     }
   }
