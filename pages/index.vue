@@ -1,52 +1,52 @@
 <template lang='pug'>
-  section.conainer
-    ul
-      li
-        nuxt-link(to='/users') Users
-      li
-        nuxt-link(to='/products') Products
+  div.home-page
+    section.intro
+      h1 Get the latest tech news!
+    PostList
+
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
-
+import PostList from '~/components/posts/PostList'
 export default {
   components: {
-    Logo
+    PostList
   }
 }
-  
-
 </script>
 
-<style lang='sass'>
-.container 
-  margin: 0 auto
-  min-height: 100vh
-  display: flex
-  justify-content: center
-  align-items: center
-  text-align: center
+<style scoped lang='sass'>
+  .intro
+    height: 300px
+    position: relative
+    padding: 30px
+    box-sizing: border-box
+    background-image: url('~assets/images/main-page-background.jpg')
+    background-position: center
+    background-size: cover
+    h1
+      position: absolute
+      top: 10%
+      left: 5%
+      width: 90%
+      font-size: 1.5rem
+      color: black
+      background-color: rgb(211, 211, 211)
+      padding: 10px
+      border-radius: 10px
+      box-shadow: 3px 3px 3px black
+      box-sizing: border-box
+      border: 1px solid black
 
+  @media (min-width: 768px)
+    .intro h1
+      font-size: 2rem
 
-.title 
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif
-  display: block
-  font-weight: 300
-  font-size: 100px
-  color: #35495e
-  letter-spacing: 1px
-
-
-.subtitle 
-  font-weight: 300
-  font-size: 42px
-  color: #526488
-  word-spacing: 5px
-  padding-bottom: 15px
-
-
-.links 
-  padding-top: 15px
-
+  .featured-posts
+    display: flex
+    padding: 20px
+    box-sizing: border-box
+    flex-wrap: wrap
+    align-items: center
+    justify-content: center
 </style>
