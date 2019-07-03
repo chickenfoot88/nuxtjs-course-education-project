@@ -1,5 +1,5 @@
 <template lang='pug'>
-  button.button(:class="btnStyle" v-bind="$attrs" @="$listeners")
+  button.button(:class="btnStyle" v-bind="$attrs" v-on="$listeners")
     slot
 </template>
 
