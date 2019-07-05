@@ -1,16 +1,19 @@
 <template lang='pug'>
   .admin-page
     section.new-post
-      button(@click='createPost') Create Post
+      AppButton(@click='createPost') Create Post
     section.existing-post
       PostList(isAdmin)
 </template>
 
 <script>
 import PostList from '~/components/posts/PostList'
+import AppButton from '~/components/UI/AppButton'
 export default {
+  layout: 'admin',
   components: {
-    PostList
+    PostList,
+    AppButton
   },
   methods: {
     createPost() {
