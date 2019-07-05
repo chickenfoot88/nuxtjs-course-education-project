@@ -2,7 +2,7 @@
   div.home-page
     section.intro
       h1 Get the latest tech news!
-    PostList
+    PostList(:posts='loadedPosts')
 
 </template>
 
@@ -11,6 +11,57 @@ import PostList from '~/components/posts/PostList'
 export default {
   components: {
     PostList
+  },
+  asyncData(context, callback) {
+    console.log('asyncData is executed')
+    setTimeout(() => {
+      callback(null, {
+        loadedPosts: [
+          {
+            id: '1',
+            title: 'title',
+            previewText: 'first post',
+            thumbnail: 'https://www.cg.nl/wp-content/uploads/2018/06/tech-header-01.jpg'
+          },
+          {
+            id: '2',
+            title: 'title 2',
+            previewText: 'first post',
+            thumbnail: 'https://www.cg.nl/wp-content/uploads/2018/06/tech-header-01.jpg'
+          },
+          {
+            id: '3',
+            title: 'title 3',
+            previewText: 'first post',
+            thumbnail: 'https://www.cg.nl/wp-content/uploads/2018/06/tech-header-01.jpg'
+          }
+        ]
+      })
+    }, 1500);
+  },
+  created() {
+    setTimeout(() => {
+      this.loadedPosts = [
+        {
+          id: '1',
+          title: 'title',
+          previewText: 'first post',
+          thumbnail: 'https://www.cg.nl/wp-content/uploads/2018/06/tech-header-01.jpg'
+        },
+        {
+          id: '2',
+          title: 'title 2',
+          previewText: 'first post',
+          thumbnail: 'https://www.cg.nl/wp-content/uploads/2018/06/tech-header-01.jpg'
+        },
+        {
+          id: '3',
+          title: 'title 3',
+          previewText: 'first post',
+          thumbnail: 'https://www.cg.nl/wp-content/uploads/2018/06/tech-header-01.jpg'
+        }
+      ]
+    }, 1500);
   }
 }
 </script>
