@@ -1,16 +1,37 @@
 <template lang="pug">
   div.single-post-page
     section.post
-      h1.post-title Title of the Post
+      h1.post-title {{ loadedPost.title }}
       div.post-details Post details
-        div.post-detail Last updated on xx.xx.xxxx
-        div.post-detail Written by NAME
-      p.post-content Content of the post
+        div.post-detail Last updated on {{ loadedPost.updatedDate }}
+        div.post-detail Written by {{ loadedPost.author }}
+      p.post-content {{ loadedPost.content }}
 
     section.post-feedback
       p Let me know whar you think about the post, send a mail to 
         a(href="mailto:adel55@mai.ru") adel55@mail.ru
 </template>
+
+<script>
+export default {
+  asyncData(context, callback) {
+    setTimeout(() => {
+      callback(new Error(), {
+        loadedPost:           {
+          id: '1',
+          title: `First Post (ID ${context.params.id})`,
+          previewText: 'first post',
+          author: 'Adel',
+          updatedDate: new Date(),
+          content: 'Some dummy text wich is definitely not the preview text',
+          thumbnail: 'https://www.cg.nl/wp-content/uploads/2018/06/tech-header-01.jpg',
+        },
+      })
+    }, 1000);
+  }
+}
+</script>
+
 
 <style lang="sass" scoped>
 .single-post-page
