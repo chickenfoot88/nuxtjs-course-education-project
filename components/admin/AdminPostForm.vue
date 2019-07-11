@@ -1,6 +1,5 @@
 <template lang='pug'>
   form(@submit.prevent='onSave')
-    AppControlInput
     AppControlInput(v-model='editedPost.author') Author Name
     AppControlInput(v-model='editedPost.title') Title
     AppControlInput(v-model='editedPost.thumbnailLink') Thumbnail Link
@@ -38,7 +37,7 @@ export default {
   },
   methods: {
     onSave(){
-      console.log(this.editedPost)
+      this.$emit('submit', this.editedPost)
     },
     onCancel(){
       this.$router.push('/admin')
