@@ -3,7 +3,7 @@
     section.new-post
       AppButton(@click='createPost') Create Post
     section.existing-post
-      PostList(isAdmin)
+      PostList(isAdmin :posts='loadedPosts')
 </template>
 
 <script>
@@ -14,6 +14,11 @@ export default {
   components: {
     PostList,
     AppButton
+  },
+  computed: {
+    loadedPosts(state) {
+      return this.$store.getters.loadedPosts
+    }
   },
   methods: {
     createPost() {

@@ -12,40 +12,11 @@ export default {
   components: {
     PostList
   },
-  asyncData(context) {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve({
-          loadedPosts: [
-            {
-              id: '1',
-              title: 'title',
-              previewText: 'first post',
-              thumbnail: 'https://www.cg.nl/wp-content/uploads/2018/06/tech-header-01.jpg'
-            },
-            {
-              id: '2',
-              title: 'title 2',
-              previewText: 'first post',
-              thumbnail: 'https://www.cg.nl/wp-content/uploads/2018/06/tech-header-01.jpg'
-            },
-            {
-              id: '3',
-              title: 'title 3',
-              previewText: 'first post',
-              thumbnail: 'https://www.cg.nl/wp-content/uploads/2018/06/tech-header-01.jpg'
-            }
-          ]
-        })
-      }, 1500);
-    })
-    .then(response => {
-      return response
-    })
-    .catch(() => {
-        
-    })
-  },
+  computed: {
+    loadedPosts(state) {
+      return this.$store.getters.loadedPosts
+    }
+  }
 }
 </script>
 
