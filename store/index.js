@@ -1,9 +1,10 @@
 import Vuex from 'vuex'
+import axios from 'axios'
 
 const createStore = () => {
   return new Vuex.Store({
     state: {
-      loadedPosts: {}
+      loadedPosts: []
     },
     mutations: {
       setPosts(state, posts) {
@@ -12,34 +13,20 @@ const createStore = () => {
     },
     actions: {
       nuxtServerInit(vuexContext, context) {
-        if(!process.client) {
-          console.log(context.req.session)
-        }
-        return new Promise((resolve, reject) => {
-          setTimeout(() => {
-            vuexContext.commit('setPosts', [
-              {
-                id: '1',
-                title: 'title',
-                previewText: 'first post',
-                thumbnail: 'https://www.cg.nl/wp-content/uploads/2018/06/tech-header-01.jpg'
-              },
-              {
-                id: '2',
-                title: 'title 2',
-                previewText: 'first post',
-                thumbnail: 'https://www.cg.nl/wp-content/uploads/2018/06/tech-header-01.jpg'
-              },
-              {
-                id: '3',
-                title: 'title 3',
-                previewText: 'first post',
-                thumbnail: 'https://www.cg.nl/wp-content/uploads/2018/06/tech-header-01.jpg'
-              }
-            ])
-            resolve()
-          }, 1500);
+        return axios({
+          method: 'GET',
+          url: 'https://udemy-nuxt-course-fb043.firebaseio.com/posts.json'
         })
+          .then(response => {
+            const postArray = []
+            for(let key in response.data) {
+              postArray.push({ ...response.data[key], id: key })
+            }
+            vuexContext.commit('setPosts', postArray)
+          })
+          .catch(error => {
+            context.error(error)
+          })
       },
       setPosts({ commit }, posts) {
         commit('setPosts', posts)
