@@ -1,25 +1,45 @@
 <template lang='pug'>
   .admin-post-page
     section.update-form
-      AdminPostForm(:post="loadedPost")
+      AdminPostForm(:post="loadedPost" @submit="onSubmitted")
 </template>
 
 <script>
 import AdminPostForm from '~/components/admin/AdminPostForm'
+import axios from 'axios'
 
 export default {
   layout: 'admin',
   components:{
     AdminPostForm
   },
-  data() {
-    return {
-      loadedPost: {
-        author: 'Adel',
-        title: 'My awesome post',
-        content: 'Content of the post',
-        thumbnail: 'https://www.cg.nl/wp-content/uploads/2018/06/tech-header-01.jpg'
-      }
+  asyncData(context) {
+    return axios({
+      method: 'GET',
+      url: `https://udemy-nuxt-course-fb043.firebaseio.com/posts/${context.params.postid}.json`,
+    })
+      .then(({ data }) => {
+        return {
+          loadedPost: data
+        }
+
+      })
+      .catch(error => context.error(error))
+  },
+  methods: {
+    onSubmitted(postData, updatedDate) {
+      console.log(postData)
+      axios({
+        method: 'PUT', 
+        url: 'https://udemy-nuxt-course-fb043.firebaseio.com/posts.json',
+        data: { ...postData, updatedData: new Date() }
+      })
+      .then(response => {
+        console.log('response', response)
+      })
+      .catch(error => {
+        console.error('error', error)
+      })
     }
   }
 }
