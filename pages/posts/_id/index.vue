@@ -8,26 +8,26 @@
       p.post-content {{ loadedPost.content }}
 
     section.post-feedback
-      p Let me know whar you think about the post, send a mail to 
+      p Let me know what you think about the post, send a mail to 
         a(href="mailto:adel55@mai.ru") adel55@mail.ru
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
-  asyncData(context, callback) {
-    setTimeout(() => {
-      callback(new Error(), {
-        loadedPost:           {
-          id: '1',
-          title: `First Post (ID ${context.params.id})`,
-          previewText: 'first post',
-          author: 'Adel',
-          updatedDate: new Date(),
-          content: 'Some dummy text wich is definitely not the preview text',
-          thumbnail: 'https://www.cg.nl/wp-content/uploads/2018/06/tech-header-01.jpg',
-        },
+  asyncData(context) {
+    return axios({
+      method: 'GET',
+      url: `https://udemy-nuxt-course-fb043.firebaseio.com/posts/${context.params.id}.json`,
+    })
+      .then(({ data }) => {
+        return {
+          loadedPost: data
+        }
+
       })
-    }, 1000);
+      .catch(error => context.error(error))
   }
 }
 </script>
