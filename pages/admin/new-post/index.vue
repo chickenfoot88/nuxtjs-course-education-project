@@ -13,17 +13,17 @@ export default {
     AdminPostForm
   },
   methods: {
-    onSubmitted(postData) {
+    onSubmitted(postData, updatedDate) {
       axios({
         method: 'POST', 
-        ulr: 'https://udemy-nuxt-course-fb043.firebaseio.com/posts.json',
-        data: postData
+        url: 'https://udemy-nuxt-course-fb043.firebaseio.com/posts.json',
+        data: { ...postData, updatedData: new Date() }
       })
       .then(response => {
-        console.log(response)
+        console.log('response', response)
       })
       .catch(error => {
-        console.log(error)
+        console.error('error', error)
       })
     }
   }
