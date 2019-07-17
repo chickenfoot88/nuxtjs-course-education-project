@@ -13,18 +13,9 @@ export default {
     AdminPostForm
   },
   methods: {
-    onSubmitted(postData, updatedDate) {
-      axios({
-        method: 'POST', 
-        url: 'https://udemy-nuxt-course-fb043.firebaseio.com/posts.json',
-        data: { ...postData, updatedData: new Date() }
-      })
-      .then(response => {
-        console.log('response', response)
-      })
-      .catch(error => {
-        console.error('error', error)
-      })
+    onSubmitted(postData) {
+     this.$store.dispatch('addPost', postData)
+      .then(() => { this.$router.push('/admin') })
     }
   }
 }

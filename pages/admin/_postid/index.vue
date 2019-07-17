@@ -14,32 +14,16 @@ export default {
     AdminPostForm
   },
   asyncData(context) {
-    return axios({
-      method: 'GET',
-      url: `https://udemy-nuxt-course-fb043.firebaseio.com/posts/${context.params.postid}.json`,
-    })
-      .then(({ data }) => {
-        return {
-          loadedPost: data
-        }
-
+    return axios.get(`https://udemy-nuxt-course-fb043.firebaseio.com/posts/${context.params.postid}.json`)
+      .then(({ data })=> {
+        return { loadedPost: { ...data, id: context.params.postId } }
       })
-      .catch(error => context.error(error))
+      .catch(() => { context.error(error) })
   },
   methods: {
-    onSubmitted(postData, updatedDate) {
-      console.log(postData)
-      axios({
-        method: 'PUT', 
-        url: 'https://udemy-nuxt-course-fb043.firebaseio.com/posts.json',
-        data: { ...postData, updatedData: new Date() }
-      })
-      .then(response => {
-        console.log('response', response)
-      })
-      .catch(error => {
-        console.error('error', error)
-      })
+    async onSubmitted(editedPost) {
+      this.$store.dispatch('editPost', editedPost)
+        .then(() => { this.$router.push('/admin') })
     }
   }
 }
