@@ -9,16 +9,16 @@ import AdminPostForm from '~/components/admin/AdminPostForm'
 import axios from 'axios'
 
 export default {
-  layout: 'admin',
+  layout: 'default',
   components:{
     AdminPostForm
   },
   asyncData(context) {
-    return axios.get(`https://udemy-nuxt-course-fb043.firebaseio.com/posts/${context.params.postid}.json`)
+    return axios.get(`https://udemy-nuxt-course-fb043.firebaseio.com/posts/${context.params.postId}.json`)
       .then(({ data })=> {
         return { loadedPost: { ...data, id: context.params.postId } }
       })
-      .catch(() => { context.error(error) })
+      .catch((error) => { context.error(error) })
   },
   methods: {
     async onSubmitted(editedPost) {
