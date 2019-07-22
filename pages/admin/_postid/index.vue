@@ -9,7 +9,7 @@ import AdminPostForm from '~/components/admin/AdminPostForm'
 import axios from 'axios'
 
 export default {
-  layout: 'admin',
+  layout: 'default',
   components:{
     AdminPostForm
   },
@@ -19,7 +19,7 @@ export default {
         console.log(context.params)
         return { loadedPost: { ...data, id: context.params.postId } }
       })
-      .catch(() => { context.error(error) })
+      .catch((error) => { context.error(error) })
   },
   methods: {
     async onSubmitted(editedPost) {
