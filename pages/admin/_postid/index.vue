@@ -14,8 +14,9 @@ export default {
     AdminPostForm
   },
   asyncData(context) {
-    return axios.get(`https://udemy-nuxt-course-fb043.firebaseio.com/posts/${context.params.postid}.json`)
+    return axios.get(`https://udemy-nuxt-course-fb043.firebaseio.com/posts/${context.params.postId}.json`)
       .then(({ data })=> {
+        console.log(context.params)
         return { loadedPost: { ...data, id: context.params.postId } }
       })
       .catch(() => { context.error(error) })
