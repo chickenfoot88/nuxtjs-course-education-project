@@ -20,7 +20,6 @@ const createStore = () => {
     },
     actions: {
       nuxtServerInit(vuexContext, context) {
-        console.log('nuxt server init')
         return axios({
           method: 'GET',
           url: 'https://udemy-nuxt-course-fb043.firebaseio.com/posts.json'
