@@ -1,5 +1,4 @@
 import Vuex from 'vuex'
-import axios from 'axios'
 
 const createStore = () => {
   return new Vuex.Store({
@@ -20,7 +19,7 @@ const createStore = () => {
     },
     actions: {
       nuxtServerInit(vuexContext, context) {
-        return axios({
+        return context.app.$axios({
           method: 'GET',
           url: `${process.env.baseUrl}/posts.json`
         })
@@ -43,7 +42,7 @@ const createStore = () => {
       async addPost({ commit }, postData) {
         const createdPost = { ...postData, updatedDate: new Date() }
         try {
-          let { data } = await axios.post(`${process.env.baseUrl}/posts.json`, createdPost)
+          let { data } = await app.axios.$post(`${process.env.baseUrl}/posts.json`, createdPost)
           commit('addPost', { ...createdPost, id: data.name })
         } catch (error) {
           console.error('error', error)
@@ -52,7 +51,7 @@ const createStore = () => {
 
       async editPost({ commit }, editedPost) {
         try {
-          let { data } = await axios.put(`${process.env.baseUrl}/posts/${editedPost.id}.json`, editedPost)
+          let { data } = await app.$axios.$put(`${process.env.baseUrl}/posts/${editedPost.id}.json`, editedPost)
           commit('editPost', data)
         } catch (error) {
           console.error('error', error)

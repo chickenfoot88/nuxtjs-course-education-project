@@ -13,11 +13,9 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 export default {
   asyncData(context) {
-    return axios({
+    return context.app.$axios({
       method: 'GET',
       url: `${process.env.baseUrl}/posts/${context.params.id}.json`,
     })
