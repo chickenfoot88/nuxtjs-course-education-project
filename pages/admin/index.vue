@@ -7,14 +7,8 @@
 </template>
 
 <script>
-import PostList from '~/components/posts/PostList'
-import AppButton from '~/components/UI/AppButton'
 export default {
-  layout: 'default',
-  components: {
-    PostList,
-    AppButton
-  },
+  layout: 'admin',
   computed: {
     loadedPosts(state) {
       return this.$store.getters.loadedPosts

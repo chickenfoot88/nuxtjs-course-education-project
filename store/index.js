@@ -20,6 +20,7 @@ const createStore = () => {
     },
     actions: {
       nuxtServerInit(vuexContext, context) {
+        console.log('nuxt server init')
         return axios({
           method: 'GET',
           url: `${process.env.baseUrl}/posts.json`
