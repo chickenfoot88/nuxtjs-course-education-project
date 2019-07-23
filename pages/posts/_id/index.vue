@@ -3,7 +3,7 @@
     section.post
       h1.post-title {{ loadedPost.title }}
       div.post-details Post details
-        div.post-detail Last updated on {{ loadedPost.updatedDate }}
+        div.post-detail Last updated on {{ loadedPost.updatedDate | date }}
         div.post-detail Written by {{ loadedPost.author }}
       p.post-content {{ loadedPost.content }}
 
