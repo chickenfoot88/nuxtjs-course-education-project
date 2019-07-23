@@ -19,7 +19,7 @@ export default {
   asyncData(context) {
     return axios({
       method: 'GET',
-      url: `https://udemy-nuxt-course-fb043.firebaseio.com/posts/${context.params.id}.json`,
+      url: `${process.env.baseUrl}/posts/${context.params.id}.json`,
     })
       .then(({ data }) => {
         return {
