@@ -41,7 +41,7 @@ const createStore = () => {
       },
 
       async addPost({ commit }, postData) {
-        const createdPost = { ...postData, updatedData: new Date() }
+        const createdPost = { ...postData, updatedDate: new Date() }
         try {
           let { data } = await axios.post(`${process.env.baseUrl}/posts.json`, createdPost)
           commit('addPost', { ...createdPost, id: data.name })
