@@ -2,6 +2,7 @@ import pkg from './package'
 
 export default {
   mode: 'universal',
+  // mode: 'spa',
 
   /*
   ** Headers of the page
@@ -51,5 +52,9 @@ export default {
     */
     extend(config, ctx) {
     }
+  },
+
+  env: {
+    baseUrl: process.env.BASE_URL || 'https://udemy-nuxt-course-fb043.firebaseio.com',
   }
 }
