@@ -13,7 +13,7 @@ export default {
     AdminPostForm
   },
   asyncData(context) {
-    return context.app.$axios.get(`${process.env.baseUrl}/posts/${context.params.postid}.json`)
+    return context.app.$axios.get(`/posts/${context.params.postid}.json`)
       .then(({ data })=> {
         return { loadedPost: { ...data, id: context.params.postid } }
       })

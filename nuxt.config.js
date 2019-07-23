@@ -47,7 +47,7 @@ export default {
   ],
 
   axios: {
-    baseURL: process.env.BASE_URL
+    baseURL: process.env.BASE_URL || 'https://udemy-nuxt-course-fb043.firebaseio.com',
   },
 
   /*
