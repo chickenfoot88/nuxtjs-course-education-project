@@ -1,11 +1,11 @@
 <template lang='pug'>
   .admin-auth-page
     .auth-container
-      form
-        AppControlInput(type='email') E-Mail Address
-        AppControlInput(type='password') Password
-        AppButton(type='submit') {{ isLogin ? &apos;Login&apos; : &apos;Sign Up&apos; }}
-        AppButton(type='button' btn-style='inverted' style='margin-left: 10px' @click='isLogin = !isLogin') Switch to {{ isLogin ? &apos;Signup&apos; : &apos;Login&apos; }}
+      form(@submit.prevent='onSubmit')
+        AppControlInput(v-model='email' type='email') E-Mail Address
+        AppControlInput(v-model='password' type='password') Password
+        AppButton(type='submit') {{ isLogin ? "Login" : "Sign Up" }}
+        AppButton(type='button' btn-style='inverted' style='margin-left: 10px' @click='isLogin = !isLogin') Switch to {{ isLogin ? "Signup" : "Login" }}
 </template>
 
 <script>
@@ -14,7 +14,14 @@ export default {
   layout: 'admin',
   data() {
     return {
-      isLogin: true
+      isLogin: true,
+      email: '',
+      password: ''
+    }
+  },
+  methods: {
+    onSubmit() {
+
     }
   }
 }

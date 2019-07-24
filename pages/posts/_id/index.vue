@@ -13,14 +13,10 @@
 </template>
 
 <script>
-import axios from 'axios'
 
 export default {
   asyncData(context) {
-    return axios({
-      method: 'GET',
-      url: `${process.env.baseUrl}/posts/${context.params.id}.json`,
-    })
+    return this.$axios.$get(`${process.env.baseUrl}/posts/${context.params.id}.json`)
       .then(({ data }) => {
         return {
           loadedPost: data

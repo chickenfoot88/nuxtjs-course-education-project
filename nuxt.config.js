@@ -43,6 +43,7 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
+    '@nuxtjs/axios',
   ],
 
   /*
@@ -58,5 +59,12 @@ export default {
 
   env: {
     baseUrl: process.env.BASE_URL || 'https://udemy-nuxt-course-fb043.firebaseio.com',
+    fbSignUpUrl: 'https://identitytoolkit.googleapis.com/v1/accounts:signUp',
+    fbSignInUrl: 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword',
+    fbAPIkey: 'AIzaSyB5lwV6BUnEFztJofZdLotywBqIJDpj13o'
+  },
+
+  router: {
+    middleware: 'log'
   }
 }
