@@ -13,12 +13,10 @@
 </template>
 
 <script>
+
 export default {
   asyncData(context) {
-    return context.app.$axios({
-      method: 'GET',
-      url: `/posts/${context.params.id}.json`,
-    })
+    return this.$axios.$get(`${process.env.baseUrl}/posts/${context.params.id}.json`)
       .then(({ data }) => {
         return {
           loadedPost: data
