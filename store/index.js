@@ -140,9 +140,12 @@ const createStore = () => {
             .find(cookie => cookie.trim().startsWith('tokenExpirationDate=') )
             .split('=')[1]
           
-        } else {
+        } else if (process.client){
           tokenExpirationDate = +localStorage.getItem('tokenExpirationDate')
           token = localStorage.getItem('token')
+        } else {
+          token = null
+          tokenExpirationDate = null
         }
 
         if (new Date().getTime() > tokenExpirationDate || !token) {
