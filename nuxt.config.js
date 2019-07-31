@@ -5,9 +5,6 @@ export default {
   mode: 'universal',
   // mode: 'spa',
 
-  /*
-  ** Headers of the page
-  */
   head: {
     title: pkg.name,
     meta: [
@@ -21,28 +18,16 @@ export default {
     ]
   },
 
-  /*
-  ** Customize the progress-bar color
-  */
   loading: { color: '#fff' },
 
-  /*
-  ** Global CSS
-  */
   css: [
   ],
 
-  /*
-  ** Plugins to load before mounting the App
-  */
   plugins: [
     '~plugins/core-components.js',
     '~plugins/date-filter.js'
   ],
 
-  /*
-  ** Nuxt.js modules
-  */
   modules: [
     '@nuxtjs/axios'
   ],
@@ -52,13 +37,7 @@ export default {
     credentials: false
   },
 
-  /*
-  ** Build configuration
-  */
   build: {
-    /*
-    ** You can extend webpack config here
-    */
     extend(config, ctx) {
     }
   },
