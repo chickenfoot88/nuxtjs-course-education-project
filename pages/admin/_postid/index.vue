@@ -9,12 +9,13 @@ import AdminPostForm from '~/components/admin/AdminPostForm'
 
 export default {
   layout: 'default',
+   middleware: ['check-auth', 'auth'],
   components:{
     AdminPostForm
   },
   asyncData(context) {
-    return this.$axios.$get(`${process.env.baseUrl}/posts/${context.params.postId}.json`)
-      .then(({ data })=> {
+    return context.$axios.$get(`${process.env.baseUrl}/posts/${context.params.postid}.json`)
+      .then(data=> {
         return { loadedPost: { ...data, id: context.params.postid } }
       })
       .catch((error) => { context.error(error) })

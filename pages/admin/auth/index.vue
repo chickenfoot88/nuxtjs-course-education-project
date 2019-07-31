@@ -20,8 +20,17 @@ export default {
     }
   },
   methods: {
-    onSubmit() {
-
+    async onSubmit() {
+      try {
+        await this.$store.dispatch('authenticateUser', {
+          isLogin: this.isLogin,
+          email: this.email,
+          password: this.password
+        })
+        this.$router.push({ name: 'admin' })
+      } catch(error) {
+        alert('auth error')
+      }
     }
   }
 }

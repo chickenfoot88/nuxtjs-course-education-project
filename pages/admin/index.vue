@@ -8,7 +8,8 @@
 
 <script>
 export default {
-  layout: 'admin',
+  layout: 'default',
+  middleware: ['check-auth', 'auth'],
   computed: {
     loadedPosts(state) {
       return this.$store.getters.loadedPosts
