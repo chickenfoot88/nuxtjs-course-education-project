@@ -87,7 +87,7 @@ const createStore = () => {
         let tokenExpirationDate
 
         try {
-          let { data: { idToken, expiresIn } } = await this.$axios({
+          const { data: { idToken, expiresIn } } = await this.$axios({
             method: 'POST',
             url: authData.isLogin ? process.env.fbSignInUrl : process.env.fbSignUpUrl,
             params: {
@@ -110,7 +110,9 @@ const createStore = () => {
 
           Cookie.set('token', token)
           Cookie.set('tokenExpirationDate', tokenExpirationDate)
-
+          
+          // return Promise.resolve(this.$axios.$post('http://localhost:3000/api/track-data', { data: 'Authenticated' }))
+          this.$axios.$post('http://localhost:3000/api/track-data', { data: 'Authenticated' })
           return Promise.resolve()
 
         } catch(error) {
