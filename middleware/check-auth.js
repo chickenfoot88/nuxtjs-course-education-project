@@ -1,5 +1,3 @@
-export default function({ store: { dispatch }}) {
-  if(process.clent) {
-    dispatch('initAuth')
-  }
+export default function({ store: { dispatch }, req}) {
+  dispatch('initAuth', req)
 }

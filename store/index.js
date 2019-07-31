@@ -1,4 +1,5 @@
 import Vuex from 'vuex'
+import Cookie from 'js-cookie'
 
 const createStore = () => {
   return new Vuex.Store({
@@ -96,26 +97,58 @@ const createStore = () => {
           })
           commit('setToken', idToken)
           dispatch('setLogoutTime', expiresIn * 1000)
+
           localStorage.setItem('token', idToken)
           localStorage.setItem('tokenExpiration', new Date().getTime() + expiresIn * 1000)
+          Cookie.set('jwt', idToken)
+          Cookie.set('expirationDate', new Date().getTime() + expiresIn * 1000)
+
           return Promise.resolve()
         } catch(error) {
           return Promise.reject(error)
         }
       },
 
-      setLogoutTime({ commit }, duration) {
+      setLogoutTimer({ commit }, duration) {
         setTimeout(() => {
           commit('clearToken')
         }, duration)
       },
 
-      initAuth({ dispatch, commit }) {
-        let expirationTime = +localStorage.getItem('tokenExpiration')
-        let token = localStorage.getItem('token')
-        if (new Date().getTime() > expirationTime || token) return
+      initAuth({ dispatch, commit }, request) {
+        let token
+        let expirationDate
+        
+        if(request) {
+          if(!request.headers.cookie) return
+          
+          const jwtCookie = request.headers.cookie
+          .split(';')
+          .find(cookie => cookie.trim().startsWith('jwt='))
+
+          
+          if(!jwtCookie) {
+            return
+          }
+          
+          token = jwtCookie.split('=')[1]
+
+          
+          expirationDate = request.headers.cookie
+          .split(';')
+          .find(cookie => cookie.trim().startsWith('expirationDate=') )
+          .split('=')[1]
+          
+        } else {
+
+          expirationDate = +localStorage.getItem('tokenExpiration')
+          token = localStorage.getItem('token')
+
+          if (new Date().getTime() > expirationDate || token) return
+        }
+
         commit('setToken', token)
-        dispatch('setLogoutTimer', expirationTime - new Date().getTime())
+        dispatch('setLogoutTimer', expirationDate - new Date().getTime())
       }
     },
     getters: {
