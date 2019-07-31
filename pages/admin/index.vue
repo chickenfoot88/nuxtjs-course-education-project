@@ -2,6 +2,7 @@
   .admin-page
     section.new-post
       AppButton(@click='createPost') Create Post
+      AppButton(@click='onLogout' style="margin-left: 10px") Logout
     section.existing-post
       PostList(isAdmin :posts='loadedPosts')
 </template>
@@ -18,6 +19,10 @@ export default {
   methods: {
     createPost() {
       this.$router.push('/admin/new-post')
+    },
+    onLogout() {
+      this.$store.dispatch('logout')
+      this.$router.push('/admin/auth')
     }
   }
 }

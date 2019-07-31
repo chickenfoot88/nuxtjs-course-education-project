@@ -81,7 +81,11 @@ const createStore = () => {
         }
       },
 
-      async authenticateUser({ dispatch, commit }, authData) {
+      async authenticateUser({ commit }, authData) {
+
+        let token
+        let tokenExpirationDate
+
         try {
           let { data: { idToken, expiresIn } } = await this.$axios({
             method: 'POST',
@@ -95,60 +99,63 @@ const createStore = () => {
               returnSecureToken: true
             }
           })
-          commit('setToken', idToken)
-          dispatch('setLogoutTime', expiresIn * 1000)
 
-          localStorage.setItem('token', idToken)
-          localStorage.setItem('tokenExpiration', new Date().getTime() + expiresIn * 1000)
-          Cookie.set('jwt', idToken)
-          Cookie.set('expirationDate', new Date().getTime() + expiresIn * 1000)
+          commit('setToken', idToken)
+
+          token               = idToken
+          tokenExpirationDate = new Date().getTime() + Number.parseInt(expiresIn) * 1000
+
+          localStorage.setItem('token', token)
+          localStorage.setItem('tokenExpirationDate', tokenExpirationDate)
+
+          Cookie.set('token', token)
+          Cookie.set('tokenExpirationDate', tokenExpirationDate)
 
           return Promise.resolve()
+
         } catch(error) {
           return Promise.reject(error)
         }
       },
 
-      setLogoutTimer({ commit }, duration) {
-        setTimeout(() => {
-          commit('clearToken')
-        }, duration)
-      },
-
       initAuth({ dispatch, commit }, request) {
+
         let token
-        let expirationDate
+        let tokenExpirationDate
         
         if(request) {
           if(!request.headers.cookie) return
           
-          const jwtCookie = request.headers.cookie
-          .split(';')
-          .find(cookie => cookie.trim().startsWith('jwt='))
+          const tokenCookie = request.headers.cookie
+            .split(';')
+            .find(cookie => cookie.trim().startsWith('token='))
 
+          if(!tokenCookie) return
           
-          if(!jwtCookie) {
-            return
-          }
-          
-          token = jwtCookie.split('=')[1]
-
-          
-          expirationDate = request.headers.cookie
-          .split(';')
-          .find(cookie => cookie.trim().startsWith('expirationDate=') )
-          .split('=')[1]
+          token               = tokenCookie.split('=')[1]
+          tokenExpirationDate = request.headers.cookie
+            .split(';')
+            .find(cookie => cookie.trim().startsWith('tokenExpirationDate=') )
+            .split('=')[1]
           
         } else {
-
-          expirationDate = +localStorage.getItem('tokenExpiration')
+          tokenExpirationDate = +localStorage.getItem('tokenExpirationDate')
           token = localStorage.getItem('token')
+        }
 
-          if (new Date().getTime() > expirationDate || token) return
+        if (new Date().getTime() > tokenExpirationDate || !token) {
+          dispatch('logout')
+          return
         }
 
         commit('setToken', token)
-        dispatch('setLogoutTimer', expirationDate - new Date().getTime())
+      },
+
+      logout({ commit }) {
+        commit('clearToken')
+        const tokenData = ['token', 'tokenExpirationDate']
+        tokenData.forEach(item => { Cookie.remove(item) })
+        if(process.client) tokenData.forEach(item => { localStorage.removeItem(item) })
       }
     },
     getters: {

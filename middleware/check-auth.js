@@ -1,3 +1,3 @@
-export default function({ store: { dispatch }, req}) {
+export default function({ store: { dispatch }, req }) {
   dispatch('initAuth', req)
 }
